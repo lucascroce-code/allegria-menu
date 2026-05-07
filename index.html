@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light only">
+  <title>L'Allegria — Restaurant en bord de mer</title>
+
+  <!-- ============================================================
+       POLICES DE CARACTÈRES
+       Style éditorial / magazine inspiré de Tenement Coffee :
+       - "Outfit" pour les titres (sans-serif géométrique, bold)
+       - "Inter" en light/regular pour le corps
+       Tu peux les remplacer par d'autres Google Fonts si besoin.
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       VARIABLES CSS — STYLE ÉDITORIAL / MAGAZINE
+       Inspiré du menu Tenement Coffee :
+       - Fond crème très clair, presque blanc
+       - Texte noir pur
+       - Pas d'accent fort, le style vient de la typo et des photos
+       - Zéro arrondi (angles droits partout)
+       ============================================================ */
+    :root {
+      --color-bg:        #F7F4EF;   /* Blanc cassé chaud — FOND PRINCIPAL UNIFORME */
+      --color-bg-light:  #F7F4EF;   /* Même couleur que le fond */
+      --color-bg-dark:   #EFEBE3;   /* Très légèrement plus foncé pour les events */
+      --color-text:      #1A1A1A;   /* Noir quasi pur */
+      --color-text-light:#6B6B6B;   /* Gris moyen */
+      --color-text-muted:#999999;   /* Gris doux */
+      --color-accent:    #C8382E;   /* Rouge discret, utilisé très peu */
+      --color-border:    #DDD8CE;   /* Bordure fine, subtile */
+      --color-white:     #FFFFFF;
+
+      /* TYPOGRAPHIE — Style éditorial */
+      --font-display: 'Outfit', 'Helvetica Neue', Helvetica, sans-serif;
+      --font-body:    'Inter', -apple-system, sans-serif;
+
+      /* ESPACEMENTS */
+      --space-xs:  4px;
+      --space-sm:  8px;
+      --space-md:  16px;
+      --space-lg:  24px;
+      --space-xl:  32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Force le mode clair même si le téléphone est en mode sombre */
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      color-scheme: light only;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      font-weight: 300;
+      font-size: 14px;
+    }
+
+    /* Bloque le dark mode du navigateur */
+    @media (prefers-color-scheme: dark) {
+      html, body {
+        background-color: var(--color-bg) !important;
+        color: var(--color-text) !important;
+      }
+    }
+
+    /* ============================================================
+       CONTENEUR PRINCIPAL
+       ============================================================ */
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    /* ============================================================
+       HEADER — Style éditorial avec typo massive
+       ============================================================ */
+    .header {
+      padding: var(--space-2xl) 0 var(--space-lg);
+      text-align: left; /* Aligné à gauche, style magazine */
+    }
+
+    .header__title {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: var(--color-text);
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .header__subtitle {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-top: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* ============================================================
+       SÉLECTEUR DE LANGUE — Petites pills discrètes
+       ============================================================ */
+    .lang-selector {
+      display: flex;
+      gap: 6px;
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: 0; /* Angles droits */
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn:hover {
+      border-color: var(--color-text);
+      color: var(--color-text);
+    }
+
+    .lang-btn.active {
+      background: var(--color-text);
+      color: var(--color-bg);
+      border-color: var(--color-text);
+    }
+
+    /* ============================================================
+       ÉVÉNEMENTS — Ligne horizontale fine + texte
+       ============================================================ */
+    .events {
+      margin-top: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--color-text);
+      border-bottom: 1px solid var(--color-text);
+    }
+
+    .event-card {
+      padding: var(--space-md) 0;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .event-card + .event-card {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .event-card__title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .event-card__detail {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--color-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================================
+       NAVIGATION CATÉGORIES — Style tabs minimaliste
+       ============================================================ */
+    .category-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--color-bg);
+      padding: var(--space-md) 0;
+      margin-top: var(--space-xl);
+      border-bottom: 1px solid var(--color-text);
+    }
+
+    .category-nav__inner {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 2px;
+    }
+
+    .category-nav__inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-btn {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border: 1px solid var(--color-border);
+      border-radius: 0;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .cat-btn:hover {
+      border-color: var(--color-text);
+      color: var(--color-text);
+    }
+
+    .cat-btn.active {
+      background: var(--color-text);
+      color: var(--color-bg);
+      border-color: var(--color-text);
+    }
+
+    /* ============================================================
+       SECTIONS DE MENU
+       ============================================================ */
+    .menu-section {
+      margin-top: var(--space-2xl);
+      padding-bottom: var(--space-lg);
+    }
+
+    .menu-section__title {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: var(--space-xs);
+      /* Ligne décorative sous le titre */
+      padding-bottom: var(--space-md);
+      border-bottom: 2px solid var(--color-text);
+      margin-bottom: var(--space-lg);
+    }
+
+    .menu-section__note {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--color-text-light);
+      margin-top: calc(-1 * var(--space-sm));
+      margin-bottom: var(--space-lg);
+      line-height: 1.5;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* ============================================================
+       GRILLE BENTO — Style magazine / éditorial
+       Photos carrées, texte en-dessous, très aéré
+       ============================================================ */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    .bento-item {
+      background: transparent; /* Pas de fond de carte */
+      border-radius: 0;
+      padding: 0;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      min-height: auto;
+      transition: opacity 0.2s ease;
+    }
+
+    .bento-item:active {
+      opacity: 0.7;
+    }
+
+    .bento-item--wide {
+      grid-column: 1 / -1;
+    }
+
+    /* ============================================================
+       ESPACE PHOTO — Carré, sans arrondi, style éditorial
+       ============================================================ */
+    .bento-item--has-photo {
+      padding: 0;
+      overflow: visible;
+    }
+
+    .bento-item__photo {
+      width: 100%;
+      aspect-ratio: 1 / 1; /* Photo carrée */
+      background-color: var(--color-bg-dark);
+      background-size: cover;
+      background-position: center;
+      border-radius: 0; /* Angles droits */
+    }
+
+    .bento-item--has-photo .bento-item__content {
+      padding: var(--space-md) 0 0 0;
+    }
+
+    /* Nom du plat — Bold, uppercase, éditorial */
+    .bento-item__name {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+
+    /* Description — Légère, uppercase, petite */
+    .bento-item__desc {
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: var(--color-text-light);
+      line-height: 1.5;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      flex-grow: 1;
+    }
+
+    /* Prix — Aligné à droite du nom, style magazine */
+    .bento-item__price {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--color-text);
+      align-self: flex-start;
+    }
+
+    /* ============================================================
+       LISTE SIMPLE — Lignes fines, très épurée
+       ============================================================ */
+    .simple-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: transparent;
+      border-radius: 0;
+      overflow: visible;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .simple-list__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: var(--space-md) 0;
+      background: transparent;
+      gap: var(--space-sm);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .simple-list__name {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+
+    .simple-list__detail {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .simple-list__price {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--color-text-light);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       SOUS-SECTIONS
+       ============================================================ */
+    .subsection-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-top: var(--space-2xl);
+      margin-bottom: var(--space-md);
+      color: var(--color-text);
+    }
+
+    /* ============================================================
+       TAGS PARFUMS — Petits labels alignés
+       ============================================================ */
+    .flavor-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: var(--space-sm);
+    }
+
+    .flavor-tag {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: 0;
+      color: var(--color-text-light);
+    }
+
+    /* ============================================================
+       FOOTER — Minimaliste
+       ============================================================ */
+    .footer {
+      margin-top: var(--space-3xl);
+      padding: var(--space-2xl) 0;
+      text-align: left;
+      border-top: 2px solid var(--color-text);
+    }
+
+    .footer__label {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-sm);
+      color: var(--color-text-light);
+    }
+
+    .footer__phone {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-text);
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: -0.02em;
+    }
+
+    .footer__phone:hover {
+      opacity: 0.6;
+    }
+
+    .footer__note {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: var(--color-text-muted);
+      margin-top: var(--space-lg);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ============================================================
+       ANIMATIONS D'ENTRÉE
+       ============================================================ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (min-width: 600px) {
+      .container {
+        max-width: 640px;
+        padding: 0 var(--space-xl);
+      }
+
+      .header__title {
+        font-size: 4.5rem;
+      }
+
+      .menu-section__title {
+        font-size: 3rem;
+      }
+
+      .bento-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: var(--space-xl);
+      }
+
+      .bento-item__photo {
+        aspect-ratio: 1 / 1;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .container {
+        max-width: 800px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
+    <header class="header">
+      <h1 class="header__title">L'Allegria</h1>
+      <p class="header__subtitle" data-i18n="subtitle">Restaurant en bord de mer</p>
+
+      <!-- SÉLECTEUR DE LANGUE
+           Pour ajouter une langue :
+           1. Ajoute un <button> ici avec data-lang="xx"
+           2. Ajoute les traductions dans l'objet `translations` en JS
+      -->
+      <nav class="lang-selector" aria-label="Choix de la langue">
+        <button class="lang-btn active" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="it">IT</button>
+        <button class="lang-btn" data-lang="de">DE</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+      </nav>
+    </header>
+
+    <!-- ============================================================
+         ÉVÉNEMENTS / SOIRÉES SPÉCIALES
+         ============================================================ -->
+    <section class="events fade-in">
+      <div class="event-card">
+        <p class="event-card__title" data-i18n="event_moules">Soiree moules frites</p>
+        <p class="event-card__detail" data-i18n="event_moules_detail">Tous les mercredis</p>
+      </div>
+      <div class="event-card">
+        <p class="event-card__title" data-i18n="event_bbq">Soiree a theme ou barbecue</p>
+        <p class="event-card__detail" data-i18n="event_bbq_detail">Tous les vendredis et samedis</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         NAVIGATION PAR CATÉGORIES (sticky)
+         Pour ajouter une catégorie :
+         1. Ajoute un <button> ici avec data-target="#id-de-la-section"
+         2. Crée la section correspondante plus bas
+         ============================================================ -->
+    <nav class="category-nav">
+      <div class="category-nav__inner">
+        <button class="cat-btn active" data-target="#entrees" data-i18n="cat_entrees">Entrees</button>
+        <button class="cat-btn" data-target="#bruschetta">Bruschetta</button>
+        <button class="cat-btn" data-target="#pates" data-i18n="cat_pates">Pates &amp; Omelettes</button>
+        <button class="cat-btn" data-target="#viandes" data-i18n="cat_viandes">Viandes</button>
+        <button class="cat-btn" data-target="#enfants" data-i18n="cat_enfants">Menu Enfants</button>
+        <button class="cat-btn" data-target="#desserts" data-i18n="cat_desserts">Desserts</button>
+        <button class="cat-btn" data-target="#glaces" data-i18n="cat_glaces">Glaces</button>
+        <button class="cat-btn" data-target="#boissons" data-i18n="cat_boissons">Boissons</button>
+        <button class="cat-btn" data-target="#alcools" data-i18n="cat_alcools">Alcools</button>
+        <button class="cat-btn" data-target="#bieres" data-i18n="cat_bieres">Bieres</button>
+        <button class="cat-btn" data-target="#cocktails">Cocktails</button>
+        <button class="cat-btn" data-target="#vins" data-i18n="cat_vins">Vins &amp; Pichets</button>
+      </div>
+    </nav>
+
+    <!-- ============================================================
+         ENTRÉES
+         ============================================================ -->
+    <section id="entrees" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_entrees">Entrees</h2>
+
+      <div class="bento-grid">
+
+        <!-- 
+          EXEMPLE D'ITEM AVEC ESPACE PHOTO :
+          Ajoute style="background-image: url('images/salade-verte.jpg')" 
+          sur le div .bento-item__photo pour afficher une photo.
+        -->
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo" 
+               style="/* background-image: url('images/salade-verte.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="salade_verte">Salade Verte</p>
+            <p class="bento-item__desc" data-i18n="salade_verte_desc">Oignons rouges, salade verte, olives</p>
+            <p class="bento-item__price">4,50&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/salade-chevre.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="salade_chevre">Salade de Chevre chaud</p>
+            <p class="bento-item__desc" data-i18n="salade_chevre_desc">Croutons, lardons, chevre croustillant, tomates, oignons rouges, vinaigrette au miel</p>
+            <p class="bento-item__price">17,00&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/salade-mozza.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="salade_mozza">Salade Mozza</p>
+            <p class="bento-item__desc" data-i18n="salade_mozza_desc">Coeur de boeuf, tomates, salade, olives noires, mozzarella, oignons rouges, sauce basilic</p>
+            <p class="bento-item__price">16,80&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/salade-cesar.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="salade_cesar">Salade Cesar</p>
+            <p class="bento-item__desc" data-i18n="salade_cesar_desc">Poulet panne, tomates, oignons rouges, croutons, Parmesan, oeuf dur, sauce Cesar, olives noires</p>
+            <p class="bento-item__price">18,00&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/salade-poulpe.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="salade_poulpe">Salade de Poulpe</p>
+            <p class="bento-item__desc" data-i18n="salade_poulpe_desc">Salade, pommes de terre, oignons rouges, citron, persillade</p>
+            <p class="bento-item__price">19,50&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/charcuterie-corse.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="charcuterie_corse">Charcuterie Corse</p>
+            <p class="bento-item__desc"></p>
+            <p class="bento-item__price">20,00&#8364;</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BRUSCHETTA
+         ============================================================ -->
+    <section id="bruschetta" class="menu-section fade-in">
+      <h2 class="menu-section__title">Bruschetta</h2>
+      <div class="bento-grid">
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/bruschetta-reine-rouge.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name">Reine Rouge</p>
+            <p class="bento-item__price">12,50&#8364;</p>
+          </div>
+        </div>
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/bruschetta-reine-blanche.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name">Reine Blanche</p>
+            <p class="bento-item__price">12,50&#8364;</p>
+          </div>
+        </div>
+        <div class="bento-item bento-item--wide bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/bruschetta-allegria.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name">L'Allegria</p>
+            <p class="bento-item__desc" data-i18n="bruschetta_allegria_desc">Des de tomates, salade, jambon cru, mozzarella</p>
+            <p class="bento-item__price">14,50&#8364;</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PÂTES & OMELETTES
+         ============================================================ -->
+    <section id="pates" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_pates">Pates &amp; Omelettes</h2>
+      <p class="menu-section__note" data-i18n="pates_note">Sauce au choix : Forestiere, Roquefort, Poivre Vert (+3,50&#8364;)</p>
+      <div class="bento-grid">
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/linguini.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name">Linguini</p>
+            <p class="bento-item__desc" data-i18n="linguini_desc">Sauce au choix (en supplement)</p>
+            <p class="bento-item__price">12,50&#8364;</p>
+          </div>
+        </div>
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/omelette.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="omelette">Omelette Fromage Frais et menthe</p>
+            <p class="bento-item__price">16,80&#8364;</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         NOS VIANDES
+         ============================================================ -->
+    <section id="viandes" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_viandes">Nos Viandes</h2>
+      <p class="menu-section__note" data-i18n="viandes_note">Nos viandes sont accompagnees de frites fraiches et/ou de legumes. Sauce au choix : Forestiere, Roquefort, Poivre Vert (+3,50&#8364;)</p>
+
+      <div class="bento-grid">
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/entrecote.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="entrecote">Entrecote</p>
+            <p class="bento-item__price">26,00&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/cotelettes-agneau.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="cotelettes_agneau">Cotelettes d'Agneau</p>
+            <p class="bento-item__price">24,50&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--wide bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/hamburger-maison.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="hamburger_maison">Hamburger Maison</p>
+            <p class="bento-item__desc" data-i18n="hamburger_maison_desc">Pain Polizzi, Steak hache, sauce maison, oignons confits, tomates, salade, Cheddar, frites fraiches</p>
+            <p class="bento-item__price">17,00&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/hamburger-poulet.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="hamburger_poulet">Hamburger Poulet</p>
+            <p class="bento-item__desc" data-i18n="hamburger_poulet_desc">Pain Polizzi, Poulet panne, sauce maison, oignons confits, tomates, salade, Cheddar, frites fraiches</p>
+            <p class="bento-item__price">16,50&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/hamburger-corse.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="hamburger_corse">Hamburger Corse</p>
+            <p class="bento-item__desc" data-i18n="hamburger_corse_desc">Pain Polizzi, Steak hache, sauce maison, oignons confits, tomates, salade, tomme Corse, Panzetta, frites fraiches</p>
+            <p class="bento-item__price">18,00&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/panzetta-oeuf.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="panzetta_oeuf">Panzetta Oeuf</p>
+            <p class="bento-item__price">15,50&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/escalope-panee.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="escalope_panee">Escalope de Veau Panee</p>
+            <p class="bento-item__price">21,00&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/escalope-forestiere.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="escalope_forestiere">Escalope de Veau Forestiere</p>
+            <p class="bento-item__price">22,50&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/brochettes-boeuf.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="brochettes_boeuf">Brochettes de Boeuf</p>
+            <p class="bento-item__price">20,50&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/brochettes-poulet.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="brochettes_poulet">Brochettes de Poulet</p>
+            <p class="bento-item__price">17,50&#8364;</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/magret-canard.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name" data-i18n="magret_canard">Magret de Canard</p>
+            <p class="bento-item__price">24,00&#8364;</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         MENU ENFANTS
+         ============================================================ -->
+    <section id="enfants" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_enfants">Menu Enfants</h2>
+      <div class="bento-grid">
+        <div class="bento-item">
+          <p class="bento-item__name" data-i18n="steak_hache">Steak Hache</p>
+          <p class="bento-item__desc" data-i18n="steak_hache_desc">Frites fraiches, salade</p>
+          <p class="bento-item__price">11,00&#8364;</p>
+        </div>
+        <div class="bento-item">
+          <p class="bento-item__name">Nuggets</p>
+          <p class="bento-item__desc" data-i18n="nuggets_desc">Frites fraiches, salade</p>
+          <p class="bento-item__price">8,50&#8364;</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         DESSERTS
+         ============================================================ -->
+    <section id="desserts" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_desserts">Desserts</h2>
+      <div class="simple-list">
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="ile_flottante">Ile Flottante</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="tiramisu_cafe">Tiramisu cafe</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Tiramisu Nutella</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="tiramisu_caramel">Tiramisu caramel/speculoos</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="fondant_chocolat">Fondant au chocolat</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="profiteroles">Profiteroles</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="salade_fruits">Salade de fruits</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="creme_brulee">Creme brulee</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="assiette_fromages">Assiette de fromages</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="tarte_tatin">Tarte Tatin</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="cafe_gourmand">Cafe gourmand</span>
+          <span class="simple-list__price">9,80&#8364;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         GLACES
+         ============================================================ -->
+    <section id="glaces" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_glaces">Glaces</h2>
+
+      <div class="simple-list">
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="dame_blanche">Dame blanche</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="chocolat_liegeois">Chocolat Liegeois</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="cafe_liegeois">Cafe Liegeois</span>
+          <span class="simple-list__price">8,50&#8364;</span>
+        </div>
+      </div>
+
+      <h3 class="subsection-title" data-i18n="boules_glaces">Boule(s) de Glaces</h3>
+      <div class="simple-list">
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="boule">Boule</span>
+          <span class="simple-list__price">2,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="supplement_chantilly">Supplement Chantilly</span>
+          <span class="simple-list__price">1,00&#8364;</span>
+        </div>
+      </div>
+
+      <h3 class="subsection-title" data-i18n="parfums_glaces">Parfums glaces</h3>
+      <div class="flavor-tags">
+        <span class="flavor-tag" data-i18n="vanille">Vanille</span>
+        <span class="flavor-tag" data-i18n="chocolat">Chocolat</span>
+        <span class="flavor-tag" data-i18n="cafe_parfum">Cafe</span>
+        <span class="flavor-tag" data-i18n="praline">Praline</span>
+        <span class="flavor-tag">Stracciatella</span>
+        <span class="flavor-tag" data-i18n="pistache">Pistache</span>
+        <span class="flavor-tag" data-i18n="menthe_chocolat">Menthe/Chocolat</span>
+        <span class="flavor-tag" data-i18n="rhum_raisin">Rhum/Raisin</span>
+      </div>
+
+      <h3 class="subsection-title" data-i18n="parfums_sorbets">Parfums sorbets</h3>
+      <div class="flavor-tags">
+        <span class="flavor-tag" data-i18n="fraises">Fraises</span>
+        <span class="flavor-tag" data-i18n="framboises">Framboises</span>
+        <span class="flavor-tag" data-i18n="mandarine">Mandarine</span>
+        <span class="flavor-tag" data-i18n="citron">Citron</span>
+        <span class="flavor-tag" data-i18n="citron_vert">Citron vert</span>
+        <span class="flavor-tag" data-i18n="mangue">Mangue</span>
+        <span class="flavor-tag" data-i18n="passion">Fruits de la passion</span>
+        <span class="flavor-tag" data-i18n="noix_coco">Noix de coco</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BOISSONS NON ALCOOLISÉES
+         ============================================================ -->
+    <section id="boissons" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_boissons">Boissons</h2>
+      <p class="menu-section__note" data-i18n="boissons_note">Supplement sirop (+0,50&#8364;)</p>
+
+      <div class="simple-list">
+        <div class="simple-list__item">
+          <span class="simple-list__name">Soda</span>
+          <span class="simple-list__price">3,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">St George</span>
+            <span class="simple-list__detail"> (33cl)</span>
+          </div>
+          <span class="simple-list__price">2,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Orezza</span>
+            <span class="simple-list__detail"> (33cl)</span>
+          </div>
+          <span class="simple-list__price">3,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Pago</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">3,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name" data-i18n="jus_fruit">Jus de fruit</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">3,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="cafe">Cafe</span>
+          <span class="simple-list__price">1,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="deca">Deca</span>
+          <span class="simple-list__price">1,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Capuccino</span>
+          <span class="simple-list__price">2,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="chocolat_chaud">Chocolat chaud</span>
+          <span class="simple-list__price">2,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="the">The</span>
+          <span class="simple-list__price">2,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="sirop_eau">Sirop a l'eau</span>
+          <span class="simple-list__price">1,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Bitter</span>
+          <span class="simple-list__price">2,50&#8364;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BOISSONS ALCOOLISÉES
+         ============================================================ -->
+    <section id="alcools" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_alcools">Boissons alcoolisees</h2>
+      <div class="simple-list">
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Pastis</span>
+            <span class="simple-list__detail"> (51, Ricard, Dami, Casanis)</span>
+          </div>
+          <span class="simple-list__price">2,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Cap Corse Mattei</span>
+            <span class="simple-list__detail" data-i18n="blanc_rouge"> (Blanc / Rouge)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Whisky baby</span>
+            <span class="simple-list__detail"> (Ballantine's, J&amp;B, Johnnie)</span>
+          </div>
+          <span class="simple-list__price">3,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name" data-i18n="whisky_grand">Whisky grand verre</span>
+            <span class="simple-list__detail"> (tube)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Malibu</span>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Gin Tonic</span>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Rhum Havana baby</span>
+            <span class="simple-list__detail" data-i18n="blanc_ambre"> (blanc / ambre)</span>
+          </div>
+          <span class="simple-list__price">3,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name" data-i18n="rhum_grand">Rhum Havana grand verre</span>
+            <span class="simple-list__detail"> (tube)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Suze</span>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Martini</span>
+            <span class="simple-list__detail" data-i18n="blanc_rouge_rose"> (blanc, rouge, rose)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Porto</span>
+          <span class="simple-list__price">4,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Vodka</span>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Jack Daniel</span>
+          <span class="simple-list__price">4,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Get 27</span>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Kir</span>
+          <span class="simple-list__price">4,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Kir Royal</span>
+          <span class="simple-list__price">5,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="muscat_petillant">Muscat petillant</span>
+          <span class="simple-list__price">4,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name" data-i18n="coupe_champagne">Coupe de champagne</span>
+          <span class="simple-list__price">6,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Campari</span>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Prosecco</span>
+          <span class="simple-list__price">4,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Chivas</span>
+          <span class="simple-list__price">4,50&#8364;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BIÈRES
+         ============================================================ -->
+    <section id="bieres" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_bieres">Bieres</h2>
+
+      <h3 class="subsection-title" data-i18n="bieres_bouteilles">Bieres bouteilles</h3>
+      <div class="simple-list">
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Desperados</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Corona</span>
+            <span class="simple-list__detail"> (33cl)</span>
+          </div>
+          <span class="simple-list__price">5,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Colomba blanche</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name" data-i18n="pietra_ambree">Pietra Ambree</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Pietra Rossa</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name" data-i18n="paolina_ambree">Paolina Ambree</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">5,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Chjucca Pietra</span>
+            <span class="simple-list__detail"> (15cl)</span>
+          </div>
+          <span class="simple-list__price">2,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Heineken Small</span>
+            <span class="simple-list__detail"> (15cl)</span>
+          </div>
+          <span class="simple-list__price">2,50&#8364;</span>
+        </div>
+      </div>
+
+      <h3 class="subsection-title" data-i18n="bieres_pression">Bieres pression</h3>
+      <div class="simple-list">
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name" data-i18n="bock_blonde">Bock blonde</span>
+            <span class="simple-list__detail"> (15cl Pietra / Serena)</span>
+          </div>
+          <span class="simple-list__price">2,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name" data-i18n="blonde_25">Blonde</span>
+            <span class="simple-list__detail"> (25cl Pietra / Serena)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name" data-i18n="panache">Panache</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Monaco</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">4,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Pinte</span>
+            <span class="simple-list__detail"> (50cl Pietra / Serena)</span>
+          </div>
+          <span class="simple-list__price">7,00&#8364;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COCKTAILS
+         ============================================================ -->
+    <section id="cocktails" class="menu-section fade-in">
+      <h2 class="menu-section__title">Cocktails</h2>
+      <div class="bento-grid">
+        <div class="bento-item bento-item--has-photo">
+          <div class="bento-item__photo"
+               style="/* background-image: url('images/mojito.jpg'); */">
+          </div>
+          <div class="bento-item__content">
+            <p class="bento-item__name">Mojito</p>
+            <p class="bento-item__price">8,50&#8364;</p>
+          </div>
+        </div>
+        <div class="bento-item">
+          <p class="bento-item__name" data-i18n="mojito_fraise">Mojito Fraise</p>
+          <p class="bento-item__price">8,50&#8364;</p>
+        </div>
+        <div class="bento-item">
+          <p class="bento-item__name">Aperol Spritz</p>
+          <p class="bento-item__price">8,50&#8364;</p>
+        </div>
+        <div class="bento-item">
+          <div>
+            <p class="bento-item__name">Capo Spritz</p>
+            <p class="bento-item__desc" data-i18n="blanc_rouge">(Blanc / Rouge)</p>
+          </div>
+          <p class="bento-item__price">8,50&#8364;</p>
+        </div>
+        <div class="bento-item bento-item--wide">
+          <p class="bento-item__name">Allegria</p>
+          <p class="bento-item__desc">(Limoncello et Prosecco)</p>
+          <p class="bento-item__price">8,50&#8364;</p>
+        </div>
+        <div class="bento-item bento-item--wide">
+          <p class="bento-item__name">Virgin Mojito</p>
+          <p class="bento-item__desc" data-i18n="virgin_mojito_desc">(Classique ou Fraise)</p>
+          <p class="bento-item__price">8,50&#8364;</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VINS & PICHETS
+         ============================================================ -->
+    <section id="vins" class="menu-section fade-in">
+      <h2 class="menu-section__title" data-i18n="cat_vins">Vins &amp; Pichets</h2>
+      <div class="simple-list">
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name" data-i18n="verre_vin">Verre de vin</span>
+            <span class="simple-list__detail" data-i18n="rouge_blanc_rose"> (rouge / blanc / rose)</span>
+          </div>
+          <span class="simple-list__price">4,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <span class="simple-list__name">Piscine</span>
+          <span class="simple-list__price">6,00&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Pichet</span>
+            <span class="simple-list__detail"> (25cl)</span>
+          </div>
+          <span class="simple-list__price">4,50&#8364;</span>
+        </div>
+        <div class="simple-list__item">
+          <div>
+            <span class="simple-list__name">Pichet</span>
+            <span class="simple-list__detail"> (50cl)</span>
+          </div>
+          <span class="simple-list__price">8,00&#8364;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER — Réservation
+         ============================================================ -->
+    <footer class="footer fade-in">
+      <p class="footer__label" data-i18n="reservation">Sur reservation</p>
+      <a href="tel:+33626343304" class="footer__phone">06 26 34 33 04</a>
+      <p class="footer__note">L'Allegria — Restaurant en bord de mer</p>
+    </footer>
+
+  </div><!-- /.container -->
+
+  <!-- ============================================================
+       JAVASCRIPT
+       - Système de traduction multilingue
+       - Navigation par catégories
+       - Animations au scroll
+       ============================================================ -->
+  <script>
+    /* ==============================================================
+       TRADUCTIONS
+       Pour ajouter une langue :
+       1. Ajoute un objet avec le code langue (ex: "pt" pour portugais)
+       2. Ajoute un bouton dans le HTML : <button class="lang-btn" data-lang="pt">PT</button>
+       
+       Pour ajouter un texte traduisible :
+       1. Ajoute data-i18n="ma_cle" sur l'élément HTML
+       2. Ajoute "ma_cle" dans chaque langue ci-dessous
+       ============================================================== */
+    const translations = {
+      fr: {
+        subtitle: "Restaurant en bord de mer",
+        event_moules: "Soiree moules frites",
+        event_moules_detail: "Tous les mercredis",
+        event_bbq: "Soiree a theme ou barbecue",
+        event_bbq_detail: "Tous les vendredis et samedis",
+        cat_entrees: "Entrees",
+        cat_pates: "Pates & Omelettes",
+        cat_viandes: "Viandes",
+        cat_enfants: "Menu Enfants",
+        cat_desserts: "Desserts",
+        cat_glaces: "Glaces",
+        cat_boissons: "Boissons",
+        cat_alcools: "Alcools",
+        cat_bieres: "Bieres",
+        cat_vins: "Vins & Pichets",
+        salade_verte: "Salade Verte",
+        salade_verte_desc: "Oignons rouges, salade verte, olives",
+        salade_chevre: "Salade de Chevre chaud",
+        salade_chevre_desc: "Croutons, lardons, chevre croustillant, tomates, oignons rouges, vinaigrette au miel",
+        salade_mozza: "Salade Mozza",
+        salade_mozza_desc: "Coeur de boeuf, tomates, salade, olives noires, mozzarella, oignons rouges, sauce basilic",
+        salade_cesar: "Salade Cesar",
+        salade_cesar_desc: "Poulet panne, tomates, oignons rouges, croutons, Parmesan, oeuf dur, sauce Cesar, olives noires",
+        salade_poulpe: "Salade de Poulpe",
+        salade_poulpe_desc: "Salade, pommes de terre, oignons rouges, citron, persillade",
+        charcuterie_corse: "Charcuterie Corse",
+        bruschetta_allegria_desc: "Des de tomates, salade, jambon cru, mozzarella",
+        pates_note: "Sauce au choix : Forestiere, Roquefort, Poivre Vert (+3,50\u20AC)",
+        linguini_desc: "Sauce au choix (en supplement)",
+        omelette: "Omelette Fromage Frais et menthe",
+        viandes_note: "Nos viandes sont accompagnees de frites fraiches et/ou de legumes. Sauce au choix : Forestiere, Roquefort, Poivre Vert (+3,50\u20AC)",
+        entrecote: "Entrecote",
+        cotelettes_agneau: "Cotelettes d'Agneau",
+        hamburger_maison: "Hamburger Maison",
+        hamburger_maison_desc: "Pain Polizzi, Steak hache, sauce maison, oignons confits, tomates, salade, Cheddar, frites fraiches",
+        hamburger_poulet: "Hamburger Poulet",
+        hamburger_poulet_desc: "Pain Polizzi, Poulet panne, sauce maison, oignons confits, tomates, salade, Cheddar, frites fraiches",
+        hamburger_corse: "Hamburger Corse",
+        hamburger_corse_desc: "Pain Polizzi, Steak hache, sauce maison, oignons confits, tomates, salade, tomme Corse, Panzetta, frites fraiches",
+        panzetta_oeuf: "Panzetta Oeuf",
+        escalope_panee: "Escalope de Veau Panee",
+        escalope_forestiere: "Escalope de Veau Forestiere",
+        brochettes_boeuf: "Brochettes de Boeuf",
+        brochettes_poulet: "Brochettes de Poulet",
+        magret_canard: "Magret de Canard",
+        steak_hache: "Steak Hache",
+        steak_hache_desc: "Frites fraiches, salade",
+        nuggets_desc: "Frites fraiches, salade",
+        ile_flottante: "Ile Flottante",
+        tiramisu_cafe: "Tiramisu cafe",
+        tiramisu_caramel: "Tiramisu caramel/speculoos",
+        fondant_chocolat: "Fondant au chocolat",
+        profiteroles: "Profiteroles",
+        salade_fruits: "Salade de fruits",
+        creme_brulee: "Creme brulee",
+        assiette_fromages: "Assiette de fromages",
+        tarte_tatin: "Tarte Tatin",
+        cafe_gourmand: "Cafe gourmand",
+        dame_blanche: "Dame blanche",
+        chocolat_liegeois: "Chocolat Liegeois",
+        cafe_liegeois: "Cafe Liegeois",
+        boules_glaces: "Boule(s) de Glaces",
+        boule: "Boule",
+        supplement_chantilly: "Supplement Chantilly",
+        parfums_glaces: "Parfums glaces",
+        vanille: "Vanille",
+        chocolat: "Chocolat",
+        cafe_parfum: "Cafe",
+        praline: "Praline",
+        pistache: "Pistache",
+        menthe_chocolat: "Menthe/Chocolat",
+        rhum_raisin: "Rhum/Raisin",
+        parfums_sorbets: "Parfums sorbets",
+        fraises: "Fraises",
+        framboises: "Framboises",
+        mandarine: "Mandarine",
+        citron: "Citron",
+        citron_vert: "Citron vert",
+        mangue: "Mangue",
+        passion: "Fruits de la passion",
+        noix_coco: "Noix de coco",
+        boissons_note: "Supplement sirop (+0,50\u20AC)",
+        jus_fruit: "Jus de fruit",
+        cafe: "Cafe",
+        deca: "Deca",
+        chocolat_chaud: "Chocolat chaud",
+        the: "The",
+        sirop_eau: "Sirop a l'eau",
+        bieres_bouteilles: "Bieres bouteilles",
+        pietra_ambree: "Pietra Ambree",
+        paolina_ambree: "Paolina Ambree",
+        bieres_pression: "Bieres pression",
+        bock_blonde: "Bock blonde",
+        blonde_25: "Blonde",
+        panache: "Panache",
+        blanc_rouge: "(Blanc / Rouge)",
+        blanc_ambre: "(blanc / ambre)",
+        blanc_rouge_rose: "(blanc, rouge, rose)",
+        rouge_blanc_rose: "(rouge / blanc / rose)",
+        whisky_grand: "Whisky grand verre",
+        rhum_grand: "Rhum Havana grand verre",
+        muscat_petillant: "Muscat petillant",
+        coupe_champagne: "Coupe de champagne",
+        mojito_fraise: "Mojito Fraise",
+        virgin_mojito_desc: "(Classique ou Fraise)",
+        verre_vin: "Verre de vin",
+        reservation: "Sur reservation",
+      },
+
+      en: {
+        subtitle: "Seaside Restaurant",
+        event_moules: "Mussels & Fries Night",
+        event_moules_detail: "Every Wednesday",
+        event_bbq: "Theme Night or Barbecue",
+        event_bbq_detail: "Every Friday and Saturday",
+        cat_entrees: "Starters",
+        cat_pates: "Pasta & Omelettes",
+        cat_viandes: "Meats",
+        cat_enfants: "Kids Menu",
+        cat_desserts: "Desserts",
+        cat_glaces: "Ice Cream",
+        cat_boissons: "Drinks",
+        cat_alcools: "Spirits",
+        cat_bieres: "Beers",
+        cat_vins: "Wines & Pitchers",
+        salade_verte: "Green Salad",
+        salade_verte_desc: "Red onions, green salad, olives",
+        salade_chevre: "Warm Goat Cheese Salad",
+        salade_chevre_desc: "Croutons, bacon, crispy goat cheese, tomatoes, red onions, honey vinaigrette",
+        salade_mozza: "Mozzarella Salad",
+        salade_mozza_desc: "Beef heart tomatoes, salad, black olives, mozzarella, red onions, basil sauce",
+        salade_cesar: "Caesar Salad",
+        salade_cesar_desc: "Breaded chicken, tomatoes, red onions, croutons, Parmesan, hard-boiled egg, Caesar dressing, black olives",
+        salade_poulpe: "Octopus Salad",
+        salade_poulpe_desc: "Salad, potatoes, red onions, lemon, parsley",
+        charcuterie_corse: "Corsican Charcuterie",
+        bruschetta_allegria_desc: "Diced tomatoes, salad, cured ham, mozzarella",
+        pates_note: "Choice of sauce: Forest mushroom, Roquefort, Green pepper (+3.50\u20AC)",
+        linguini_desc: "Choice of sauce (extra charge)",
+        omelette: "Fresh Cheese & Mint Omelette",
+        viandes_note: "Our meats are served with fresh fries and/or vegetables. Choice of sauce: Forest mushroom, Roquefort, Green pepper (+3.50\u20AC)",
+        entrecote: "Rib Steak",
+        cotelettes_agneau: "Lamb Chops",
+        hamburger_maison: "House Burger",
+        hamburger_maison_desc: "Polizzi bread, ground steak, house sauce, caramelized onions, tomatoes, salad, Cheddar, fresh fries",
+        hamburger_poulet: "Chicken Burger",
+        hamburger_poulet_desc: "Polizzi bread, breaded chicken, house sauce, caramelized onions, tomatoes, salad, Cheddar, fresh fries",
+        hamburger_corse: "Corsican Burger",
+        hamburger_corse_desc: "Polizzi bread, ground steak, house sauce, caramelized onions, tomatoes, salad, Corsican cheese, Panzetta, fresh fries",
+        panzetta_oeuf: "Panzetta & Egg",
+        escalope_panee: "Breaded Veal Escalope",
+        escalope_forestiere: "Veal Escalope Forest Style",
+        brochettes_boeuf: "Beef Skewers",
+        brochettes_poulet: "Chicken Skewers",
+        magret_canard: "Duck Breast",
+        steak_hache: "Ground Steak",
+        steak_hache_desc: "Fresh fries, salad",
+        nuggets_desc: "Fresh fries, salad",
+        ile_flottante: "Floating Island",
+        tiramisu_cafe: "Coffee Tiramisu",
+        tiramisu_caramel: "Caramel/Speculoos Tiramisu",
+        fondant_chocolat: "Chocolate Fondant",
+        profiteroles: "Profiteroles",
+        salade_fruits: "Fruit Salad",
+        creme_brulee: "Creme Brulee",
+        assiette_fromages: "Cheese Plate",
+        tarte_tatin: "Tarte Tatin",
+        cafe_gourmand: "Gourmet Coffee",
+        dame_blanche: "Dame Blanche",
+        chocolat_liegeois: "Chocolate Liegeois",
+        cafe_liegeois: "Coffee Liegeois",
+        boules_glaces: "Ice Cream Scoop(s)",
+        boule: "Scoop",
+        supplement_chantilly: "Whipped Cream Extra",
+        parfums_glaces: "Ice cream flavors",
+        vanille: "Vanilla",
+        chocolat: "Chocolate",
+        cafe_parfum: "Coffee",
+        praline: "Praline",
+        pistache: "Pistachio",
+        menthe_chocolat: "Mint/Chocolate",
+        rhum_raisin: "Rum/Raisin",
+        parfums_sorbets: "Sorbet flavors",
+        fraises: "Strawberry",
+        framboises: "Raspberry",
+        mandarine: "Mandarin",
+        citron: "Lemon",
+        citron_vert: "Lime",
+        mangue: "Mango",
+        passion: "Passion Fruit",
+        noix_coco: "Coconut",
+        boissons_note: "Syrup supplement (+0.50\u20AC)",
+        jus_fruit: "Fruit Juice",
+        cafe: "Coffee",
+        deca: "Decaf",
+        chocolat_chaud: "Hot Chocolate",
+        the: "Tea",
+        sirop_eau: "Syrup & Water",
+        bieres_bouteilles: "Bottled Beers",
+        pietra_ambree: "Pietra Amber",
+        paolina_ambree: "Paolina Amber",
+        bieres_pression: "Draft Beers",
+        bock_blonde: "Blonde Bock",
+        blonde_25: "Blonde",
+        panache: "Shandy",
+        blanc_rouge: "(White / Red)",
+        blanc_ambre: "(white / amber)",
+        blanc_rouge_rose: "(white, red, rose)",
+        rouge_blanc_rose: "(red / white / rose)",
+        whisky_grand: "Whisky large glass",
+        rhum_grand: "Rum Havana large glass",
+        muscat_petillant: "Sparkling Muscat",
+        coupe_champagne: "Glass of Champagne",
+        mojito_fraise: "Strawberry Mojito",
+        virgin_mojito_desc: "(Classic or Strawberry)",
+        verre_vin: "Glass of wine",
+        reservation: "By reservation",
+      },
+
+      it: {
+        subtitle: "Ristorante sul mare",
+        event_moules: "Serata cozze e patatine",
+        event_moules_detail: "Ogni mercoledi",
+        event_bbq: "Serata a tema o barbecue",
+        event_bbq_detail: "Ogni venerdi e sabato",
+        cat_entrees: "Antipasti",
+        cat_pates: "Pasta & Frittate",
+        cat_viandes: "Carni",
+        cat_enfants: "Menu Bambini",
+        cat_desserts: "Dolci",
+        cat_glaces: "Gelati",
+        cat_boissons: "Bevande",
+        cat_alcools: "Alcolici",
+        cat_bieres: "Birre",
+        cat_vins: "Vini & Caraffe",
+        salade_verte: "Insalata Verde",
+        salade_verte_desc: "Cipolle rosse, insalata verde, olive",
+        salade_chevre: "Insalata di Formaggio di Capra caldo",
+        salade_chevre_desc: "Crostini, pancetta, formaggio di capra croccante, pomodori, cipolle rosse, vinaigrette al miele",
+        salade_mozza: "Insalata Mozzarella",
+        salade_mozza_desc: "Cuore di bue, pomodori, insalata, olive nere, mozzarella, cipolle rosse, salsa al basilico",
+        salade_cesar: "Insalata Cesare",
+        salade_cesar_desc: "Pollo impanato, pomodori, cipolle rosse, crostini, Parmigiano, uovo sodo, salsa Cesare, olive nere",
+        salade_poulpe: "Insalata di Polpo",
+        salade_poulpe_desc: "Insalata, patate, cipolle rosse, limone, prezzemolo",
+        charcuterie_corse: "Salumi Corsi",
+        bruschetta_allegria_desc: "Dadini di pomodoro, insalata, prosciutto crudo, mozzarella",
+        pates_note: "Salsa a scelta: Forestiera, Roquefort, Pepe Verde (+3,50\u20AC)",
+        linguini_desc: "Salsa a scelta (supplemento)",
+        omelette: "Frittata Formaggio Fresco e menta",
+        viandes_note: "Le nostre carni sono servite con patatine fritte fresche e/o verdure. Salsa a scelta: Forestiera, Roquefort, Pepe Verde (+3,50\u20AC)",
+        entrecote: "Costata",
+        cotelettes_agneau: "Costolette d'Agnello",
+        hamburger_maison: "Hamburger della Casa",
+        hamburger_maison_desc: "Pane Polizzi, Steak macinato, salsa della casa, cipolle caramellate, pomodori, insalata, Cheddar, patatine fritte fresche",
+        hamburger_poulet: "Hamburger di Pollo",
+        hamburger_poulet_desc: "Pane Polizzi, Pollo impanato, salsa della casa, cipolle caramellate, pomodori, insalata, Cheddar, patatine fritte fresche",
+        hamburger_corse: "Hamburger Corso",
+        hamburger_corse_desc: "Pane Polizzi, Steak macinato, salsa della casa, cipolle caramellate, pomodori, insalata, formaggio corso, Panzetta, patatine fritte fresche",
+        panzetta_oeuf: "Panzetta e Uovo",
+        escalope_panee: "Scaloppina di Vitello Impanata",
+        escalope_forestiere: "Scaloppina di Vitello alla Forestiera",
+        brochettes_boeuf: "Spiedini di Manzo",
+        brochettes_poulet: "Spiedini di Pollo",
+        magret_canard: "Magret d'Anatra",
+        steak_hache: "Steak Macinato",
+        steak_hache_desc: "Patatine fritte fresche, insalata",
+        nuggets_desc: "Patatine fritte fresche, insalata",
+        ile_flottante: "Ile Flottante",
+        tiramisu_cafe: "Tiramisu al caffe",
+        tiramisu_caramel: "Tiramisu caramello/speculoos",
+        fondant_chocolat: "Fondente al cioccolato",
+        profiteroles: "Profiteroles",
+        salade_fruits: "Macedonia di frutta",
+        creme_brulee: "Creme brulee",
+        assiette_fromages: "Piatto di formaggi",
+        tarte_tatin: "Tarte Tatin",
+        cafe_gourmand: "Caffe gourmand",
+        dame_blanche: "Dame blanche",
+        chocolat_liegeois: "Cioccolato alla Liegese",
+        cafe_liegeois: "Caffe alla Liegese",
+        boules_glaces: "Pallina/e di Gelato",
+        boule: "Pallina",
+        supplement_chantilly: "Supplemento Panna",
+        parfums_glaces: "Gusti gelato",
+        vanille: "Vaniglia",
+        chocolat: "Cioccolato",
+        cafe_parfum: "Caffe",
+        praline: "Pralinato",
+        pistache: "Pistacchio",
+        menthe_chocolat: "Menta/Cioccolato",
+        rhum_raisin: "Rum/Uvetta",
+        parfums_sorbets: "Gusti sorbetto",
+        fraises: "Fragola",
+        framboises: "Lampone",
+        mandarine: "Mandarino",
+        citron: "Limone",
+        citron_vert: "Lime",
+        mangue: "Mango",
+        passion: "Frutto della passione",
+        noix_coco: "Cocco",
+        boissons_note: "Supplemento sciroppo (+0,50\u20AC)",
+        jus_fruit: "Succo di frutta",
+        cafe: "Caffe",
+        deca: "Decaffeinato",
+        chocolat_chaud: "Cioccolata calda",
+        the: "Te",
+        sirop_eau: "Sciroppo e acqua",
+        bieres_bouteilles: "Birre in bottiglia",
+        pietra_ambree: "Pietra Ambrata",
+        paolina_ambree: "Paolina Ambrata",
+        bieres_pression: "Birre alla spina",
+        bock_blonde: "Bock bionda",
+        blonde_25: "Bionda",
+        panache: "Panache",
+        blanc_rouge: "(Bianco / Rosso)",
+        blanc_ambre: "(bianco / ambrato)",
+        blanc_rouge_rose: "(bianco, rosso, rosato)",
+        rouge_blanc_rose: "(rosso / bianco / rosato)",
+        whisky_grand: "Whisky bicchiere grande",
+        rhum_grand: "Rum Havana bicchiere grande",
+        muscat_petillant: "Moscato frizzante",
+        coupe_champagne: "Coppa di champagne",
+        mojito_fraise: "Mojito Fragola",
+        virgin_mojito_desc: "(Classico o Fragola)",
+        verre_vin: "Bicchiere di vino",
+        reservation: "Su prenotazione",
+      },
+
+      de: {
+        subtitle: "Restaurant am Meer",
+        event_moules: "Muscheln & Pommes Abend",
+        event_moules_detail: "Jeden Mittwoch",
+        event_bbq: "Themenabend oder Grillen",
+        event_bbq_detail: "Jeden Freitag und Samstag",
+        cat_entrees: "Vorspeisen",
+        cat_pates: "Pasta & Omeletts",
+        cat_viandes: "Fleisch",
+        cat_enfants: "Kindermenu",
+        cat_desserts: "Desserts",
+        cat_glaces: "Eis",
+        cat_boissons: "Getranke",
+        cat_alcools: "Spirituosen",
+        cat_bieres: "Biere",
+        cat_vins: "Weine & Karaffen",
+        salade_verte: "Gruner Salat",
+        salade_verte_desc: "Rote Zwiebeln, gruner Salat, Oliven",
+        salade_chevre: "Warmer Ziegenkase-Salat",
+        salade_chevre_desc: "Croutons, Speck, knuspriger Ziegenkase, Tomaten, rote Zwiebeln, Honig-Vinaigrette",
+        salade_mozza: "Mozzarella-Salat",
+        salade_mozza_desc: "Ochsenherz-Tomaten, Salat, schwarze Oliven, Mozzarella, rote Zwiebeln, Basilikumsauce",
+        salade_cesar: "Caesar-Salat",
+        salade_cesar_desc: "Paniertes Huhn, Tomaten, rote Zwiebeln, Croutons, Parmesan, hartgekochtes Ei, Caesar-Dressing, schwarze Oliven",
+        salade_poulpe: "Oktopus-Salat",
+        salade_poulpe_desc: "Salat, Kartoffeln, rote Zwiebeln, Zitrone, Petersilie",
+        charcuterie_corse: "Korsische Wurstwaren",
+        bruschetta_allegria_desc: "Tomatenwurfel, Salat, roher Schinken, Mozzarella",
+        pates_note: "Sauce nach Wahl: Waldpilz, Roquefort, Gruner Pfeffer (+3,50\u20AC)",
+        linguini_desc: "Sauce nach Wahl (Aufpreis)",
+        omelette: "Frischkase-Minze-Omelett",
+        viandes_note: "Unser Fleisch wird mit frischen Pommes und/oder Gemuse serviert. Sauce nach Wahl: Waldpilz, Roquefort, Gruner Pfeffer (+3,50\u20AC)",
+        entrecote: "Entrecote",
+        cotelettes_agneau: "Lammkoteletts",
+        hamburger_maison: "Hausburger",
+        hamburger_maison_desc: "Polizzi-Brot, Rindersteak, Haussauce, karamellisierte Zwiebeln, Tomaten, Salat, Cheddar, frische Pommes",
+        hamburger_poulet: "Hahnchenburger",
+        hamburger_poulet_desc: "Polizzi-Brot, paniertes Hahnchen, Haussauce, karamellisierte Zwiebeln, Tomaten, Salat, Cheddar, frische Pommes",
+        hamburger_corse: "Korsischer Burger",
+        hamburger_corse_desc: "Polizzi-Brot, Rindersteak, Haussauce, karamellisierte Zwiebeln, Tomaten, Salat, korsischer Kase, Panzetta, frische Pommes",
+        panzetta_oeuf: "Panzetta & Ei",
+        escalope_panee: "Paniertes Kalbsschnitzel",
+        escalope_forestiere: "Kalbsschnitzel Forsterin-Art",
+        brochettes_boeuf: "Rinderspiesse",
+        brochettes_poulet: "Hahnchenspiesse",
+        magret_canard: "Entenbrust",
+        steak_hache: "Hacksteak",
+        steak_hache_desc: "Frische Pommes, Salat",
+        nuggets_desc: "Frische Pommes, Salat",
+        ile_flottante: "Ile Flottante",
+        tiramisu_cafe: "Kaffee-Tiramisu",
+        tiramisu_caramel: "Karamell/Spekulatius-Tiramisu",
+        fondant_chocolat: "Schokoladen-Fondant",
+        profiteroles: "Profiteroles",
+        salade_fruits: "Obstsalat",
+        creme_brulee: "Creme brulee",
+        assiette_fromages: "Kaseteller",
+        tarte_tatin: "Tarte Tatin",
+        cafe_gourmand: "Gourmet-Kaffee",
+        dame_blanche: "Dame blanche",
+        chocolat_liegeois: "Schokoladen-Liegeois",
+        cafe_liegeois: "Kaffee-Liegeois",
+        boules_glaces: "Eiskugel(n)",
+        boule: "Kugel",
+        supplement_chantilly: "Sahne-Zuschlag",
+        parfums_glaces: "Eissorten",
+        vanille: "Vanille",
+        chocolat: "Schokolade",
+        cafe_parfum: "Kaffee",
+        praline: "Praline",
+        pistache: "Pistazie",
+        menthe_chocolat: "Minze/Schokolade",
+        rhum_raisin: "Rum/Rosine",
+        parfums_sorbets: "Sorbetsorten",
+        fraises: "Erdbeere",
+        framboises: "Himbeere",
+        mandarine: "Mandarine",
+        citron: "Zitrone",
+        citron_vert: "Limette",
+        mangue: "Mango",
+        passion: "Maracuja",
+        noix_coco: "Kokosnuss",
+        boissons_note: "Sirup-Zuschlag (+0,50\u20AC)",
+        jus_fruit: "Fruchtsaft",
+        cafe: "Kaffee",
+        deca: "Entkoffeiniert",
+        chocolat_chaud: "Heisse Schokolade",
+        the: "Tee",
+        sirop_eau: "Sirup & Wasser",
+        bieres_bouteilles: "Flaschenbiere",
+        pietra_ambree: "Pietra Bernstein",
+        paolina_ambree: "Paolina Bernstein",
+        bieres_pression: "Fassbiere",
+        bock_blonde: "Helles Bock",
+        blonde_25: "Helles",
+        panache: "Radler",
+        blanc_rouge: "(Weiss / Rot)",
+        blanc_ambre: "(weiss / bernstein)",
+        blanc_rouge_rose: "(weiss, rot, rose)",
+        rouge_blanc_rose: "(rot / weiss / rose)",
+        whisky_grand: "Whisky grosses Glas",
+        rhum_grand: "Rum Havana grosses Glas",
+        muscat_petillant: "Perlender Muskat",
+        coupe_champagne: "Glas Champagner",
+        mojito_fraise: "Erdbeer-Mojito",
+        virgin_mojito_desc: "(Klassisch oder Erdbeere)",
+        verre_vin: "Glas Wein",
+        reservation: "Auf Reservierung",
+      },
+
+      es: {
+        subtitle: "Restaurante junto al mar",
+        event_moules: "Noche de mejillones con patatas",
+        event_moules_detail: "Todos los miercoles",
+        event_bbq: "Noche tematica o barbacoa",
+        event_bbq_detail: "Todos los viernes y sabados",
+        cat_entrees: "Entrantes",
+        cat_pates: "Pasta & Tortillas",
+        cat_viandes: "Carnes",
+        cat_enfants: "Menu Infantil",
+        cat_desserts: "Postres",
+        cat_glaces: "Helados",
+        cat_boissons: "Bebidas",
+        cat_alcools: "Licores",
+        cat_bieres: "Cervezas",
+        cat_vins: "Vinos & Jarras",
+        salade_verte: "Ensalada Verde",
+        salade_verte_desc: "Cebollas rojas, ensalada verde, aceitunas",
+        salade_chevre: "Ensalada de Queso de Cabra caliente",
+        salade_chevre_desc: "Picatostes, bacon, queso de cabra crujiente, tomates, cebollas rojas, vinagreta de miel",
+        salade_mozza: "Ensalada Mozzarella",
+        salade_mozza_desc: "Corazon de buey, tomates, ensalada, aceitunas negras, mozzarella, cebollas rojas, salsa de albahaca",
+        salade_cesar: "Ensalada Cesar",
+        salade_cesar_desc: "Pollo empanado, tomates, cebollas rojas, picatostes, Parmesano, huevo duro, salsa Cesar, aceitunas negras",
+        salade_poulpe: "Ensalada de Pulpo",
+        salade_poulpe_desc: "Ensalada, patatas, cebollas rojas, limon, perejil",
+        charcuterie_corse: "Embutidos Corsos",
+        bruschetta_allegria_desc: "Dados de tomate, ensalada, jamon crudo, mozzarella",
+        pates_note: "Salsa a elegir: Forestera, Roquefort, Pimienta Verde (+3,50\u20AC)",
+        linguini_desc: "Salsa a elegir (suplemento)",
+        omelette: "Tortilla de Queso Fresco y menta",
+        viandes_note: "Nuestras carnes se sirven con patatas fritas frescas y/o verduras. Salsa a elegir: Forestera, Roquefort, Pimienta Verde (+3,50\u20AC)",
+        entrecote: "Entrecot",
+        cotelettes_agneau: "Chuletas de Cordero",
+        hamburger_maison: "Hamburguesa de la Casa",
+        hamburger_maison_desc: "Pan Polizzi, steak picado, salsa de la casa, cebollas confitadas, tomates, ensalada, Cheddar, patatas fritas frescas",
+        hamburger_poulet: "Hamburguesa de Pollo",
+        hamburger_poulet_desc: "Pan Polizzi, pollo empanado, salsa de la casa, cebollas confitadas, tomates, ensalada, Cheddar, patatas fritas frescas",
+        hamburger_corse: "Hamburguesa Corsa",
+        hamburger_corse_desc: "Pan Polizzi, steak picado, salsa de la casa, cebollas confitadas, tomates, ensalada, queso corso, Panzetta, patatas fritas frescas",
+        panzetta_oeuf: "Panzetta y Huevo",
+        escalope_panee: "Escalope de Ternera Empanado",
+        escalope_forestiere: "Escalope de Ternera Forestera",
+        brochettes_boeuf: "Brochetas de Ternera",
+        brochettes_poulet: "Brochetas de Pollo",
+        magret_canard: "Magret de Pato",
+        steak_hache: "Steak Picado",
+        steak_hache_desc: "Patatas fritas frescas, ensalada",
+        nuggets_desc: "Patatas fritas frescas, ensalada",
+        ile_flottante: "Ile Flottante",
+        tiramisu_cafe: "Tiramisu de cafe",
+        tiramisu_caramel: "Tiramisu de caramelo/speculoos",
+        fondant_chocolat: "Fondant de chocolate",
+        profiteroles: "Profiteroles",
+        salade_fruits: "Ensalada de frutas",
+        creme_brulee: "Creme brulee",
+        assiette_fromages: "Tabla de quesos",
+        tarte_tatin: "Tarte Tatin",
+        cafe_gourmand: "Cafe gourmet",
+        dame_blanche: "Dame blanche",
+        chocolat_liegeois: "Chocolate Liejense",
+        cafe_liegeois: "Cafe Liejense",
+        boules_glaces: "Bola(s) de Helado",
+        boule: "Bola",
+        supplement_chantilly: "Suplemento Nata",
+        parfums_glaces: "Sabores de helado",
+        vanille: "Vainilla",
+        chocolat: "Chocolate",
+        cafe_parfum: "Cafe",
+        praline: "Praliné",
+        pistache: "Pistacho",
+        menthe_chocolat: "Menta/Chocolate",
+        rhum_raisin: "Ron/Pasas",
+        parfums_sorbets: "Sabores de sorbete",
+        fraises: "Fresa",
+        framboises: "Frambuesa",
+        mandarine: "Mandarina",
+        citron: "Limon",
+        citron_vert: "Lima",
+        mangue: "Mango",
+        passion: "Fruta de la pasion",
+        noix_coco: "Coco",
+        boissons_note: "Suplemento sirope (+0,50\u20AC)",
+        jus_fruit: "Zumo de fruta",
+        cafe: "Cafe",
+        deca: "Descafeinado",
+        chocolat_chaud: "Chocolate caliente",
+        the: "Te",
+        sirop_eau: "Sirope con agua",
+        bieres_bouteilles: "Cervezas en botella",
+        pietra_ambree: "Pietra Tostada",
+        paolina_ambree: "Paolina Tostada",
+        bieres_pression: "Cervezas de barril",
+        bock_blonde: "Bock rubia",
+        blonde_25: "Rubia",
+        panache: "Clara",
+        blanc_rouge: "(Blanco / Tinto)",
+        blanc_ambre: "(blanco / ambar)",
+        blanc_rouge_rose: "(blanco, tinto, rosado)",
+        rouge_blanc_rose: "(tinto / blanco / rosado)",
+        whisky_grand: "Whisky vaso grande",
+        rhum_grand: "Ron Havana vaso grande",
+        muscat_petillant: "Moscatel espumoso",
+        coupe_champagne: "Copa de champan",
+        mojito_fraise: "Mojito de Fresa",
+        virgin_mojito_desc: "(Clasico o Fresa)",
+        verre_vin: "Copa de vino",
+        reservation: "Con reserva",
+      }
+    };
+
+    /* ==============================================================
+       FONCTION DE CHANGEMENT DE LANGUE
+       Parcourt tous les éléments avec data-i18n et remplace leur contenu.
+       ============================================================== */
+    let currentLang = 'fr';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      const dict = translations[lang];
+      if (!dict) return;
+
+      // Met à jour le texte de chaque élément traduisible
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+          el.textContent = dict[key];
+        }
+      });
+
+      // Met à jour l'attribut lang du HTML
+      document.documentElement.lang = lang;
+
+      // Met à jour les boutons de langue (état actif)
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      // Sauvegarde la langue dans le localStorage pour la prochaine visite
+      try { localStorage.setItem('allegria-lang', lang); } catch(e) {}
+    }
+
+    /* ==============================================================
+       NAVIGATION PAR CATÉGORIES
+       Scroll fluide vers la section ciblée + état actif du bouton.
+       ============================================================== */
+    function initCategoryNav() {
+      const navButtons = document.querySelectorAll('.cat-btn');
+      const navBar = document.querySelector('.category-nav');
+      const navHeight = navBar ? navBar.offsetHeight : 60;
+
+      navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.querySelector(btn.dataset.target);
+          if (!target) return;
+
+          // Scroll vers la section avec offset pour la nav sticky
+          const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+          window.scrollTo({ top, behavior: 'smooth' });
+
+          // Active le bon bouton
+          navButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+
+      // Met à jour le bouton actif au scroll
+      const sections = document.querySelectorAll('.menu-section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = '#' + entry.target.id;
+            navButtons.forEach(b => {
+              b.classList.toggle('active', b.dataset.target === id);
+            });
+          }
+        });
+      }, { rootMargin: `-${navHeight + 20}px 0px -60% 0px` });
+
+      sections.forEach(sec => observer.observe(sec));
+    }
+
+    /* ==============================================================
+       ANIMATIONS AU SCROLL (fade-in)
+       Les éléments avec la classe .fade-in apparaissent progressivement.
+       ============================================================== */
+    function initScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    /* ==============================================================
+       INITIALISATION
+       ============================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      /* Priorité pour le choix de langue :
+         1. Langue sauvegardée (le client a déjà choisi manuellement)
+         2. Langue du navigateur (détection automatique)
+         3. Français par défaut
+         
+         navigator.language renvoie ex: "de-DE", "it-IT", "en-US"
+         On ne garde que les 2 premiers caractères pour matcher nos langues. */
+      const availableLangs = ['fr', 'en', 'it', 'de', 'es'];
+      let savedLang = null;
+      try { savedLang = localStorage.getItem('allegria-lang'); } catch(e) {}
+
+      let lang = 'fr';
+      if (savedLang && availableLangs.includes(savedLang)) {
+        // Le client a déjà choisi une langue manuellement
+        lang = savedLang;
+      } else {
+        // Détecte la langue du navigateur
+        const browserLang = (navigator.language || navigator.userLanguage || 'fr').slice(0, 2).toLowerCase();
+        lang = availableLangs.includes(browserLang) ? browserLang : 'fr';
+      }
+
+      setLanguage(lang);
+
+      // Boutons de langue
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+      });
+
+      // Navigation catégories
+      initCategoryNav();
+
+      // Animations
+      initScrollAnimations();
+    });
+  </script>
+</body>
+</html>
